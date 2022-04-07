@@ -7,10 +7,13 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { API_URI } from '../config';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const navigate = useNavigate()
 
     function handleUsername(e) {
         setUsername(e.target.value)
@@ -19,17 +22,23 @@ export default function Login() {
         setPassword(e.target.value)
       }
       function logIn() {
+        axios.defaults.baseURL = API_URI
         if (password !== '' && username !== '') {
-          axios.post('http://localhost:8080/log-in', {
+          axios.post('/login', {
             username: username,
             password: password,
           })
-            .then(function (res) {
-              console.log(res)
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+          .then((res) => {
+            if (res.status === 200) {
+              localStorage.setItem("token", res.data);
+              axios.defaults.headers.common["Authorization"] = res.data;
+              navigate('/')
+            }
+          })
+          .catch((err) => {
+            localStorage.removeItem("token");
+            console.log(err)
+          });
         } else {
           alert('Try again')
         }

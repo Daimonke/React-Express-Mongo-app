@@ -1,5 +1,5 @@
 import './App.css';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LoginPage from './pages/loginPage'
 import SignUpPage from './pages/signUpPage'
@@ -12,7 +12,7 @@ function App() {
     <Suspense fallback={<LoadingPage />}>
     <Router>
       <Routes>
-        <Route path="/" element={ <MainPage /> } />
+        <Route path="/" element={ <MainPage verify={useEffect} /> } />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>
