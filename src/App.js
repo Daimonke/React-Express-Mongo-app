@@ -1,10 +1,11 @@
 import './App.css';
-import { Suspense, useEffect } from 'react';
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import LoginPage from './pages/loginPage'
-import SignUpPage from './pages/signUpPage'
 import LoadingPage from './pages/loadingPage'
-import MainPage from './pages/mainPage'
+
+const MainPage = lazy(() => import("./pages/mainPage"));
+const LoginPage = lazy(() => import("./pages/loginPage"));
+const SignUpPage = lazy(() => import("./pages/signUpPage"));
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
     <Suspense fallback={<LoadingPage />}>
     <Router>
       <Routes>
-        <Route path="/" element={ <MainPage verify={useEffect} /> } />
+        <Route path="/" element={ <MainPage /> } />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
       </Routes>

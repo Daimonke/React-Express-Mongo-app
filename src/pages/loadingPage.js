@@ -13,7 +13,7 @@ export default function LoadingPage(){
         alignItems: "center",
         justifyContent: {
           sm: "center",
-          xs: "flex-start",
+          xs: "flex-start"
         },
         height: "100vh",
         width: "100vw",
